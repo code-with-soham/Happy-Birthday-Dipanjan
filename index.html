@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Dipanjan! 🎉</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink:   #FF4D8D;
+      --yellow: #FFD93D;
+      --blue:   #4DC9FF;
+      --purple: #B84DFF;
+      --green:  #4DFFA5;
+      --dark:   #1A0533;
+      --card:   #2B0D52;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--dark);
+      font-family: 'Nunito', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ── CANVAS BEHIND EVERYTHING ── */
+    #confetti-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── STARS ── */
+    .stars {
+      position: fixed;
+      width: 100%; height: 100%;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle 2s infinite alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.2; transform: scale(0.8); }
+      to   { opacity: 1;   transform: scale(1.3); }
+    }
+
+    /* ── MAIN WRAPPER ── */
+    .wrapper {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 80px;
+      gap: 40px;
+    }
+
+    /* ── TITLE ── */
+    .title-block {
+      text-align: center;
+      animation: bounceIn 1s cubic-bezier(.36,1.56,.64,1) forwards;
+    }
+    .title-block .hey {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--yellow);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: pulse 2s infinite;
+    }
+    .title-block h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      background: linear-gradient(135deg, var(--pink), var(--yellow), var(--blue), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      filter: drop-shadow(0 0 20px rgba(255,77,141,0.6));
+      animation: shimmer 3s linear infinite;
+      background-size: 300% 300%;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 0%   50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0%   50%; }
+    }
+    .title-block .name {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(3rem, 10vw, 7.5rem);
+      color: var(--yellow);
+      text-shadow: 0 0 30px rgba(255,217,61,0.8), 4px 4px 0 var(--pink);
+      animation: wobble 2s infinite;
+    }
+    @keyframes wobble {
+      0%,100% { transform: rotate(-2deg) scale(1); }
+      50%      { transform: rotate( 2deg) scale(1.04); }
+    }
+
+    /* ── CAKE ── */
+    .cake-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .cake-wrap {
+      position: relative;
+      cursor: pointer;
+      filter: drop-shadow(0 0 30px rgba(255,77,141,0.5));
+      transition: transform 0.3s;
+    }
+    .cake-wrap:hover { transform: scale(1.05) rotate(1deg); }
+
+    svg.cake { width: min(340px,85vw); height: auto; }
+
+    /* candle flames animation */
+    .flame { animation: flicker 0.5s ease-in-out infinite alternate; transform-origin: bottom center; }
+    .flame:nth-child(2) { animation-delay: 0.1s; }
+    .flame:nth-child(3) { animation-delay: 0.22s; }
+    .flame:nth-child(4) { animation-delay: 0.08s; }
+    .flame:nth-child(5) { animation-delay: 0.17s; }
+    @keyframes flicker {
+      from { transform: scaleX(0.9) scaleY(0.93) translateY(2px); opacity: 0.9; }
+      to   { transform: scaleX(1.1) scaleY(1.07) translateY(-2px); opacity: 1; }
+    }
+
+    .blow-btn {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 36px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(184,77,255,0.5);
+      transition: all 0.2s;
+      animation: pulse 2s infinite;
+    }
+    .blow-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 32px rgba(255,77,141,0.7); }
+    .blow-btn:active { transform: scale(0.96); }
+    @keyframes pulse { 0%,100% { box-shadow: 0 6px 24px rgba(184,77,255,0.5); } 50% { box-shadow: 0 6px 40px rgba(255,77,141,0.9); } }
+
+    /* ── MESSAGES CARD ── */
+    .msg-card {
+      background: var(--card);
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 28px;
+      padding: 36px 40px;
+      max-width: 680px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(184,77,255,0.25);
+      animation: slideUp 1s 0.5s both;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(60px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .msg-card h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.8rem;
+      color: var(--yellow);
+      margin-bottom: 20px;
+    }
+
+    .jokes {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .joke-pill {
+      background: rgba(255,255,255,0.06);
+      border-left: 4px solid var(--pink);
+      border-radius: 12px;
+      padding: 14px 18px;
+      color: #e8d9ff;
+      font-size: 1rem;
+      line-height: 1.6;
+      text-align: left;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .joke-pill:hover { background: rgba(255,77,141,0.12); transform: translateX(4px); }
+    .joke-pill span.label {
+      display: inline-block;
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.85rem;
+      color: var(--yellow);
+      margin-bottom: 4px;
+    }
+
+    /* ── DISCO BUTTON ── */
+    .disco-section { text-align: center; }
+    .disco-btn {
+      background: linear-gradient(135deg, var(--yellow), var(--green), var(--blue));
+      background-size: 300% 300%;
+      animation: shimmer 2s infinite;
+      color: var(--dark);
+      border: none;
+      border-radius: 50px;
+      padding: 16px 40px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(77,201,255,0.5);
+      transition: all 0.2s;
+    }
+    .disco-btn:hover { transform: scale(1.06) rotate(-1deg); }
+
+    /* ── FLOATING EMOJIS ── */
+    .floaters {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .floater {
+      position: absolute;
+      font-size: 2rem;
+      animation: floatUp linear forwards;
+      bottom: -60px;
+    }
+    @keyframes floatUp {
+      from { transform: translateY(0) rotate(0deg); opacity: 1; }
+      to   { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ── DISCO OVERLAY ── */
+    #disco-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(10,0,30,0.92);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    #disco-overlay.active { display: flex; }
+    .disco-text {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem,8vw,5rem);
+      color: #fff;
+      text-shadow: 0 0 20px var(--pink), 0 0 40px var(--purple);
+      animation: discoWobble 0.4s infinite;
+    }
+    @keyframes discoWobble {
+      0%   { transform: scale(1) rotate(-3deg);  color: var(--pink); }
+      33%  { transform: scale(1.1) rotate(3deg); color: var(--yellow); }
+      66%  { transform: scale(0.95) rotate(-2deg); color: var(--blue); }
+      100% { transform: scale(1) rotate(0deg);   color: var(--green); }
+    }
+    .close-disco {
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3);
+      color: #fff;
+      border-radius: 50px;
+      padding: 12px 30px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .close-disco:hover { background: rgba(255,77,141,0.3); }
+
+    /* ── BALLOONS ── */
+    .balloon-row {
+      display: flex;
+      justify-content: center;
+      gap: clamp(12px, 3vw, 30px);
+      flex-wrap: wrap;
+      animation: slideUp 1s 0.3s both;
+    }
+    .balloon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: sway 3s ease-in-out infinite;
+    }
+    .balloon:nth-child(2) { animation-delay: 0.4s; }
+    .balloon:nth-child(3) { animation-delay: 0.8s; }
+    .balloon:nth-child(4) { animation-delay: 0.2s; }
+    .balloon:nth-child(5) { animation-delay: 0.6s; }
+    @keyframes sway {
+      0%,100% { transform: rotate(-6deg) translateY(0); }
+      50%      { transform: rotate( 6deg) translateY(-12px); }
+    }
+    .balloon svg { width: 60px; height: auto; }
+    .balloon-string { width: 1.5px; height: 70px; background: rgba(255,255,255,0.35); }
+
+    /* ── FOOTER ── */
+    .footer {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    @keyframes bounceIn {
+      from { opacity: 0; transform: scale(0.5) translateY(-40px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* ── DISCO LIGHTS ── */
+    .disco-lights {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 998;
+      display: none;
+    }
+    .disco-lights.active { display: block; }
+    .light-beam {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      mix-blend-mode: screen;
+      animation: beamMove 1s linear infinite;
+    }
+    @keyframes beamMove {
+      0%   { transform: translate(0, 0)      scale(1);   opacity: 0.6; }
+      25%  { transform: translate(200px,-80px) scale(1.4); opacity: 0.9; }
+      50%  { transform: translate(-100px,200px) scale(0.8); opacity: 0.7; }
+      75%  { transform: translate(300px,100px) scale(1.2);  opacity: 0.8; }
+      100% { transform: translate(0, 0)       scale(1);   opacity: 0.6; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- Confetti Canvas -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- Floating Emojis Container -->
+<div class="floaters" id="floaters"></div>
+
+<!-- Disco Lights -->
+<div class="disco-lights" id="disco-lights">
+  <div class="light-beam" style="background:radial-gradient(circle,rgba(255,77,141,.7),transparent 70%);top:10%;left:20%;animation-delay:0s;"></div>
+  <div class="light-beam" style="background:radial-gradient(circle,rgba(77,201,255,.7),transparent 70%);top:50%;left:60%;animation-delay:0.25s;"></div>
+  <div class="light-beam" style="background:radial-gradient(circle,rgba(255,217,61,.7),transparent 70%);top:30%;left:70%;animation-delay:0.5s;"></div>
+  <div class="light-beam" style="background:radial-gradient(circle,rgba(184,77,255,.7),transparent 70%);top:70%;left:30%;animation-delay:0.75s;"></div>
+</div>
+
+<!-- Disco Modal -->
+<div id="disco-overlay">
+  <div class="disco-text">🕺 DISCO TIME! 🎤</div>
+  <div class="disco-text" style="font-size:clamp(1rem,4vw,2rem)">Dipanjan is officially old now! 🥳</div>
+  <div class="disco-text" style="font-size:clamp(1.4rem,5vw,3rem)">But still the 🌟 of the party!</div>
+  <button class="close-disco" onclick="closeDisco()">OK OK I'll stop dancing 🛑</button>
+</div>
+
+<!-- ════════════════════════════════ MAIN ════════════════════════════════ -->
+<div class="wrapper">
+
+  <!-- Title -->
+  <div class="title-block">
+    <p class="hey">🎉 Alert! Party Mode Activated! 🎉</p>
+    <h1>Happy Birthday</h1>
+    <div class="name">Dipanjan Jana!</div>
+  </div>
+
+  <!-- Balloons -->
+  <div class="balloon-row">
+    <!-- Balloon SVG helper -->
+    <div class="balloon">
+      <svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="30" cy="35" rx="26" ry="32" fill="#FF4D8D"/>
+        <ellipse cx="22" cy="22" rx="8" ry="6" fill="rgba(255,255,255,0.25)"/>
+        <polygon points="30,67 26,75 34,75" fill="#FF4D8D"/>
+      </svg>
+      <div class="balloon-string"></div>
+    </div>
+    <div class="balloon">
+      <svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="30" cy="35" rx="26" ry="32" fill="#FFD93D"/>
+        <ellipse cx="22" cy="22" rx="8" ry="6" fill="rgba(255,255,255,0.25)"/>
+        <polygon points="30,67 26,75 34,75" fill="#FFD93D"/>
+      </svg>
+      <div class="balloon-string"></div>
+    </div>
+    <div class="balloon">
+      <svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="30" cy="35" rx="26" ry="32" fill="#4DC9FF"/>
+        <ellipse cx="22" cy="22" rx="8" ry="6" fill="rgba(255,255,255,0.25)"/>
+        <polygon points="30,67 26,75 34,75" fill="#4DC9FF"/>
+      </svg>
+      <div class="balloon-string"></div>
+    </div>
+    <div class="balloon">
+      <svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="30" cy="35" rx="26" ry="32" fill="#B84DFF"/>
+        <ellipse cx="22" cy="22" rx="8" ry="6" fill="rgba(255,255,255,0.25)"/>
+        <polygon points="30,67 26,75 34,75" fill="#B84DFF"/>
+      </svg>
+      <div class="balloon-string"></div>
+    </div>
+    <div class="balloon">
+      <svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="30" cy="35" rx="26" ry="32" fill="#4DFFA5"/>
+        <ellipse cx="22" cy="22" rx="8" ry="6" fill="rgba(255,255,255,0.25)"/>
+        <polygon points="30,67 26,75 34,75" fill="#4DFFA5"/>
+      </svg>
+      <div class="balloon-string"></div>
+    </div>
+  </div>
+
+  <!-- Cake -->
+  <div class="cake-section">
+    <div class="cake-wrap" id="cakeWrap" title="Click for surprise!">
+      <svg class="cake" viewBox="0 0 340 260" xmlns="http://www.w3.org/2000/svg">
+        <!-- Plate -->
+        <ellipse cx="170" cy="248" rx="155" ry="10" fill="#3D1A6B"/>
+        <!-- Bottom tier -->
+        <rect x="40" y="185" width="260" height="65" rx="12" fill="#FF4D8D"/>
+        <rect x="40" y="185" width="260" height="18" rx="6" fill="#FF80B0"/>
+        <!-- Middle tier -->
+        <rect x="75" y="125" width="190" height="65" rx="12" fill="#B84DFF"/>
+        <rect x="75" y="125" width="190" height="18" rx="6" fill="#D080FF"/>
+        <!-- Top tier -->
+        <rect x="105" y="75" width="130" height="55" rx="12" fill="#FFD93D"/>
+        <rect x="105" y="75" width="130" height="16" rx="6" fill="#FFE87A"/>
+        <!-- Frosting drips bottom -->
+        <path d="M 60 185 Q 70 175 80 185 Q 90 175 100 185 Q 110 175 120 185 Q 130 175 140 185 Q 150 175 160 185 Q 170 175 180 185 Q 190 175 200 185 Q 210 175 220 185 Q 230 175 240 185 Q 250 175 260 185 Q 270 175 280 185" stroke="white" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <!-- Frosting drips mid -->
+        <path d="M 90 125 Q 100 115 110 125 Q 120 115 130 125 Q 140 115 150 125 Q 160 115 170 125 Q 180 115 190 125 Q 200 115 210 125 Q 220 115 230 125 Q 240 115 250 125" stroke="white" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <!-- Dots decoration -->
+        <circle cx="85"  cy="215" r="5" fill="#FFD93D"/>
+        <circle cx="110" cy="230" r="4" fill="#4DC9FF"/>
+        <circle cx="140" cy="210" r="5" fill="#4DFFA5"/>
+        <circle cx="170" cy="225" r="4" fill="#FFD93D"/>
+        <circle cx="200" cy="212" r="5" fill="#FF9ECC"/>
+        <circle cx="230" cy="228" r="4" fill="#B84DFF"/>
+        <circle cx="260" cy="215" r="5" fill="#4DC9FF"/>
+        <!-- Stars on bottom tier -->
+        <text x="150" y="208" font-size="22" text-anchor="middle" fill="rgba(255,255,255,0.3)">★</text>
+        <!-- Candles -->
+        <!-- Candle 1 -->
+        <rect x="118" y="45" width="12" height="32" rx="4" fill="#4DC9FF"/>
+        <rect x="116" y="53" width="16" height="4" fill="rgba(0,0,0,0.15)"/>
+        <ellipse class="flame" cx="124" cy="42" rx="7" ry="10" fill="#FFD93D"/>
+        <ellipse class="flame" cx="124" cy="42" rx="4" ry="6" fill="#FF9900"/>
+        <!-- Candle 2 -->
+        <rect x="148" y="40" width="12" height="37" rx="4" fill="#FF4D8D"/>
+        <rect x="146" y="48" width="16" height="4" fill="rgba(0,0,0,0.15)"/>
+        <ellipse class="flame" cx="154" cy="37" rx="7" ry="10" fill="#FFD93D"/>
+        <ellipse class="flame" cx="154" cy="37" rx="4" ry="6" fill="#FF9900"/>
+        <!-- Candle 3 -->
+        <rect x="178" y="43" width="12" height="34" rx="4" fill="#4DFFA5"/>
+        <rect x="176" y="51" width="16" height="4" fill="rgba(0,0,0,0.15)"/>
+        <ellipse class="flame" cx="184" cy="40" rx="7" ry="10" fill="#FFD93D"/>
+        <ellipse class="flame" cx="184" cy="40" rx="4" ry="6" fill="#FF9900"/>
+        <!-- Candle 4 -->
+        <rect x="208" y="47" width="12" height="30" rx="4" fill="#B84DFF"/>
+        <rect x="206" y="55" width="16" height="4" fill="rgba(0,0,0,0.15)"/>
+        <ellipse class="flame" cx="214" cy="44" rx="7" ry="10" fill="#FFD93D"/>
+        <ellipse class="flame" cx="214" cy="44" rx="4" ry="6" fill="#FF9900"/>
+        <!-- "DJ" text on cake -->
+        <text x="170" y="162" font-family="'Fredoka One',cursive" font-size="28" font-weight="bold" text-anchor="middle" fill="white" opacity="0.85">D J</text>
+      </svg>
+    </div>
+    <button class="blow-btn" onclick="blowCandles()">💨 Blow the Candles!</button>
+  </div>
+
+  <!-- Funny Messages -->
+  <div class="msg-card">
+    <h2>🎂 Birthday Wisdom for Dipanjan 🎂</h2>
+    <div class="jokes">
+      <div class="joke-pill">
+        <span class="label">📜 Fact #1</span><br>
+        Age is just a number… but so is the emergency room's phone number. Stay hydrated! 💧
+      </div>
+      <div class="joke-pill">
+        <span class="label">🧠 Deep Thought</span><br>
+        You're not older, you're just a "vintage edition" — like a fine wine, except you get more expensive and nobody understands you. 🍷
+      </div>
+      <div class="joke-pill">
+        <span class="label">🎯 Life Advice</span><br>
+        Scientists say we only use 10% of our brain. You've been saving the other 90% for today's birthday celebrations. Smart move, Dipanjan! 🧪
+      </div>
+      <div class="joke-pill">
+        <span class="label">🌟 Official Certificate</span><br>
+        This birthday officially certifies Dipanjan Jana as "Still Younger Than Tomorrow" and "Older Than Yesterday." Frame it. 🖼️
+      </div>
+      <div class="joke-pill">
+        <span class="label">💫 Final Boss Unlocked</span><br>
+        Congratulations! You have successfully survived another year of chaos, meetings, and bad Wi-Fi. You deserve cake. Multiple cakes. 🎂🎂🎂
+      </div>
+    </div>
+  </div>
+
+  <!-- Disco Button -->
+  <div class="disco-section">
+    <button class="disco-btn" onclick="startDisco()">🕺 PRESS FOR INSTANT PARTY 🎉</button>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">made with 💜 just for dipanjan jana · keep rocking!</div>
+
+</div>
+
+<!-- ═══════════════════ SCRIPTS ═══════════════════ -->
+<script>
+  /* ── STARS ── */
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random() * 3 + 1;
+    s.style.cssText = `
+      width:${sz}px;height:${sz}px;
+      top:${Math.random()*100}%;left:${Math.random()*100}%;
+      animation-duration:${1.5+Math.random()*2}s;
+      animation-delay:${Math.random()*2}s;
+    `;
+    starsEl.appendChild(s);
+  }
+
+  /* ── CONFETTI ── */
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  const pieces = [];
+  const COLORS = ['#FF4D8D','#FFD93D','#4DC9FF','#B84DFF','#4DFFA5','#FF80B0','#FFFFFF'];
+
+  function resizeCanvas() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function spawnConfetti(n = 60) {
+    for (let i = 0; i < n; i++) {
+      pieces.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        w: 8 + Math.random() * 8,
+        h: 4 + Math.random() * 4,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        rot: Math.random() * 360,
+        rotV: (Math.random() - 0.5) * 6,
+        vx: (Math.random() - 0.5) * 3,
+        vy: 2 + Math.random() * 4,
+        opacity: 0.9,
+        shape: Math.random() > 0.5 ? 'rect' : 'circle',
+      });
+    }
+  }
+
+  function drawConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = pieces.length - 1; i >= 0; i--) {
+      const p = pieces[i];
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.globalAlpha = p.opacity;
+      ctx.fillStyle = p.color;
+      if (p.shape === 'rect') {
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      } else {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.w/2, 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.restore();
+      p.x  += p.vx;
+      p.y  += p.vy;
+      p.rot += p.rotV;
+      if (p.y > canvas.height + 20) pieces.splice(i, 1);
+    }
+    requestAnimationFrame(drawConfetti);
+  }
+  drawConfetti();
+  spawnConfetti(80);
+
+  /* ── BLOW CANDLES ── */
+  let blown = false;
+  function blowCandles() {
+    if (blown) {
+      document.querySelectorAll('.flame').forEach(f => {
+        f.style.display = '';
+        f.style.animation = '';
+      });
+      blown = false;
+      spawnConfetti(80);
+      return;
+    }
+    document.querySelectorAll('.flame').forEach(f => {
+      f.style.animation = 'none';
+      f.style.opacity   = '0';
+      setTimeout(() => { f.style.display = 'none'; }, 300);
+    });
+    blown = true;
+    spawnConfetti(120);
+    floatEmojis(['🎉','🎊','✨','⭐','🌟','💫','🎈'], 20);
+    document.querySelector('.blow-btn').textContent = '🔥 Re-light the Candles!';
+    setTimeout(() => { if (blown) document.querySelector('.blow-btn').textContent = '🔥 Re-light the Candles!'; }, 500);
+  }
+
+  /* ── CAKE CLICK SURPRISE ── */
+  let clickCount = 0;
+  const reactions = ['😍','🤩','🎂','🥳','💥','✨','🎆'];
+  document.getElementById('cakeWrap').addEventListener('click', function(e) {
+    clickCount++;
+    spawnConfetti(30);
+    const span = document.createElement('span');
+    span.textContent = reactions[clickCount % reactions.length];
+    span.style.cssText = `
+      position:fixed;font-size:2.5rem;
+      left:${e.clientX}px;top:${e.clientY}px;
+      pointer-events:none;z-index:9999;
+      animation: floatPop 1.2s forwards;
+    `;
+    document.body.appendChild(span);
+    setTimeout(() => span.remove(), 1300);
+  });
+
+  /* ── FLOATING EMOJIS ── */
+  function floatEmojis(emojis, count = 15) {
+    const container = document.getElementById('floaters');
+    for (let i = 0; i < count; i++) {
+      setTimeout(() => {
+        const el = document.createElement('span');
+        el.className = 'floater';
+        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        el.style.left = Math.random() * 95 + '%';
+        const dur = 3 + Math.random() * 4;
+        el.style.animationDuration = dur + 's';
+        el.style.animationDelay    = Math.random() * 0.5 + 's';
+        el.style.fontSize           = (1.5 + Math.random() * 1.5) + 'rem';
+        container.appendChild(el);
+        setTimeout(() => el.remove(), (dur + 1) * 1000);
+      }, i * 120);
+    }
+  }
+  floatEmojis(['🎉','🎊','🎈','⭐','🌟','💫','🎂','🎁','💜','🥳'], 12);
+
+  /* ── DISCO ── */
+  let discoInterval;
+  function startDisco() {
+    document.getElementById('disco-overlay').classList.add('active');
+    document.getElementById('disco-lights').classList.add('active');
+    spawnConfetti(150);
+    floatEmojis(['🕺','💃','🎵','🎶','✨','🌈','🎆','🎇','⚡'], 30);
+    document.body.style.animation = 'discoBG 0.3s infinite';
+    discoInterval = setInterval(() => { spawnConfetti(20); }, 600);
+  }
+  function closeDisco() {
+    document.getElementById('disco-overlay').classList.remove('active');
+    document.getElementById('disco-lights').classList.remove('active');
+    document.body.style.animation = '';
+    clearInterval(discoInterval);
+  }
+
+  /* ── FLOATING POP KEYFRAME ── */
+  const styleSheet = document.createElement('style');
+  styleSheet.textContent = `
+    @keyframes floatPop {
+      0%   { transform: translateY(0) scale(0.5); opacity: 1; }
+      60%  { transform: translateY(-70px) scale(1.4); opacity: 1; }
+      100% { transform: translateY(-130px) scale(0.8); opacity: 0; }
+    }
+    @keyframes discoBG {
+      0%   { background: #1A0533; }
+      16%  { background: #33001A; }
+      33%  { background: #001A33; }
+      50%  { background: #0D001A; }
+      66%  { background: #1A1A00; }
+      83%  { background: #001A1A; }
+      100% { background: #1A0533; }
+    }
+  `;
+  document.head.appendChild(styleSheet);
+
+  /* ── AUTO CONFETTI BURSTS ── */
+  setTimeout(() => spawnConfetti(100), 800);
+  setTimeout(() => spawnConfetti(60),  2500);
+</script>
+</body>
+</html>
